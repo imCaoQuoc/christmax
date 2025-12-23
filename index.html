@@ -771,7 +771,7 @@
                 }
             });
 
-            // Update motorbike position along straight horizontal path
+            // Update motorbike position for 2-row zigzag grid
             const motorbike = document.getElementById('motorbike');
             const journeyMap = document.querySelector('.journey-map');
 
@@ -782,14 +782,16 @@
                     const pointRect = point.getBoundingClientRect();
                     const mapRect = journeyMap.getBoundingClientRect();
 
-                    // Calculate horizontal position
+                    // Calculate both horizontal and vertical position
                     const leftOffset = pointRect.left - mapRect.left + (pointRect.width / 2);
+                    const topOffset = pointRect.top - mapRect.top + (pointRect.height / 2);
+
                     motorbike.style.left = leftOffset + 'px';
-                    motorbike.style.top = '50%';  // Always centered
+                    motorbike.style.top = topOffset + 'px';
                 }
             } else {
-                motorbike.style.left = '50px';
-                motorbike.style.top = '50%';
+                motorbike.style.left = '20%';
+                motorbike.style.top = '30%';
             }
 
             // Update progress text
