@@ -119,8 +119,8 @@
             position: relative;
             display: flex;
             flex-direction: row;
-            gap: 10px;
-            padding: 20px 5%;
+            gap: 8px;
+            padding: 20px 3%;
             align-items: center;
             justify-content: space-between;
             width: 100%;
@@ -140,15 +140,15 @@
         }
 
         .location-icon {
-            width: 55px;
-            height: 55px;
-            min-width: 55px;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
             border-radius: 50%;
             background: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6em;
+            font-size: 1.5em;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: all 0.4s ease;
             border: 3px solid #e2e8f0;
@@ -195,14 +195,14 @@
         }
 
         .location-label {
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: 600;
             color: #4a5568;
             text-align: center;
             transition: all 0.3s ease;
             background: white;
-            padding: 5px 10px;
-            border-radius: 10px;
+            padding: 4px 8px;
+            border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             white-space: nowrap;
             border: 1px solid #e2e8f0;
@@ -222,7 +222,7 @@
             left: 50px;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2.5em;
+            font-size: 2em;
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
             z-index: 10;
@@ -445,8 +445,8 @@
             }
 
             .locations-container {
-                padding: 20px 3%;
-                gap: 5px;
+                padding: 20px 2%;
+                gap: 3px;
             }
 
             .location-point {
@@ -454,10 +454,11 @@
             }
 
             .location-icon {
-                width: 45px;
-                height: 45px;
-                min-width: 45px;
-                font-size: 1.4em;
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+                font-size: 1.2em;
+                border: 2px solid #e2e8f0;
             }
 
             .location-point.active .location-icon {
@@ -469,12 +470,12 @@
             }
 
             .location-label {
-                font-size: 0.65em;
-                padding: 4px 8px;
+                font-size: 0.55em;
+                padding: 3px 6px;
             }
 
             .motorbike {
-                font-size: 2em;
+                font-size: 1.5em;
             }
 
             .location-info h2 {
@@ -515,9 +516,6 @@
                 <div class="motorbike" id="motorbike">🏍️</div>
             </div>
 
-            <!-- Location Info -->
-            <div id="locationContainer"></div>
-
             <!-- Buttons -->
             <div class="button-container">
                 <div class="btn-group">
@@ -525,6 +523,9 @@
                     <button class="btn" id="nextBtn" onclick="nextLocation()">Bắt đầu hành trình ➡️</button>
                 </div>
             </div>
+
+            <!-- Location Info -->
+            <div id="locationContainer"></div>
 
             <!-- Final Message -->
             <div class="final-message" id="finalMessage">
