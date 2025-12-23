@@ -91,9 +91,9 @@
         /* Journey Map Container */
         .journey-map {
             position: relative;
-            padding: 40px 10px;
+            padding: 20px 10px;
             margin: 40px 0;
-            min-height: 200px;
+            min-height: 280px;
             width: 100%;
             overflow: hidden;
         }
@@ -102,10 +102,9 @@
         .road {
             position: absolute;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
             width: 100%;
-            height: 100px;
+            height: 100%;
             pointer-events: none;
         }
 
@@ -114,16 +113,16 @@
             height: 100%;
         }
 
-        /* Location Points Container - Horizontal Straight Line */
+        /* Location Points Container - 2 Row Grid */
         .locations-container {
             position: relative;
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-            padding: 20px 3%;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px 10px;
+            padding: 20px 5%;
             width: 100%;
+            min-height: 250px;
         }
 
         /* Individual Location Point */
@@ -136,7 +135,37 @@
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 2;
-            flex: 0 1 auto;
+        }
+
+        /* Order for zigzag pattern: 1,2,3 top row, 6,5,4 bottom row */
+        .location-point:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .location-point:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .location-point:nth-child(3) {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .location-point:nth-child(4) {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .location-point:nth-child(5) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .location-point:nth-child(6) {
+            grid-column: 1;
+            grid-row: 2;
         }
 
         .location-icon {
@@ -614,7 +643,7 @@
             });
         }
 
-        // Draw straight horizontal road
+        // Draw zigzag road for 2-row layout
         function drawZigzagPath() {
             const svg = document.getElementById('roadPath');
             if (!svg) return;
@@ -622,37 +651,51 @@
             const points = locations.length;
             if (points < 2) return;
 
-            // Calculate SVG dimensions for straight road
-            const spacing = 110;  // Space between points
-            const totalWidth = (points * spacing) + 100;
-            const height = 100;
+            // Get actual container dimensions
+            const container = document.querySelector('.locations-container');
+            if (!container) return;
 
-            svg.setAttribute('viewBox', `0 0 ${totalWidth} ${height}`);
-            svg.setAttribute('preserveAspectRatio', 'xMinYMid meet');
+            const width = container.offsetWidth || 800;
+            const height = 280;
 
-            // Create straight horizontal line
-            const startX = 40;
-            const endX = 40 + (points * spacing);
-            const centerY = height / 2;
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.setAttribute('preserveAspectRatio', 'none');
 
-            let pathData = `M ${startX} ${centerY} L ${endX} ${centerY}`;
+            // Calculate positions for 2 row zigzag: 1-2-3 top, 6-5-4 bottom
+            const padding = width * 0.1;
+            const usableWidth = width - (padding * 2);
+            const col1X = padding;
+            const col2X = padding + usableWidth / 2;
+            const col3X = padding + usableWidth;
+            const row1Y = height * 0.3;
+            const row2Y = height * 0.7;
+
+            // Path: 1(col1,row1) -> 2(col2,row1) -> 3(col3,row1) -> 4(col3,row2) -> 5(col2,row2) -> 6(col1,row2)
+            let pathData = `M ${col1X} ${row1Y} `;
+            pathData += `L ${col2X} ${row1Y} `;  // 1 to 2
+            pathData += `L ${col3X} ${row1Y} `;  // 2 to 3
+            pathData += `L ${col3X} ${row2Y} `;  // 3 to 4 (down)
+            pathData += `L ${col2X} ${row2Y} `;  // 4 to 5
+            pathData += `L ${col1X} ${row2Y} `;  // 5 to 6
 
             // Create path element
             const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             path.setAttribute('d', pathData);
             path.setAttribute('fill', 'none');
             path.setAttribute('stroke', '#cbd5e0');
-            path.setAttribute('stroke-width', '8');
+            path.setAttribute('stroke-width', '6');
             path.setAttribute('stroke-linecap', 'round');
+            path.setAttribute('stroke-linejoin', 'round');
 
             // Add dashed line
             const dashedPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             dashedPath.setAttribute('d', pathData);
             dashedPath.setAttribute('fill', 'none');
             dashedPath.setAttribute('stroke', '#a0aec0');
-            dashedPath.setAttribute('stroke-width', '3');
-            dashedPath.setAttribute('stroke-dasharray', '12,8');
+            dashedPath.setAttribute('stroke-width', '2');
+            dashedPath.setAttribute('stroke-dasharray', '10,6');
             dashedPath.setAttribute('stroke-linecap', 'round');
+            dashedPath.setAttribute('stroke-linejoin', 'round');
 
             svg.innerHTML = '';
             svg.appendChild(path);
