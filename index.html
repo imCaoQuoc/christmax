@@ -268,7 +268,7 @@
             color: white;
             padding: 30px;
             border-radius: 20px;
-            margin: 10px 0;
+            margin: 0;
             transform: scale(0);
             animation: popIn 0.5s ease forwards;
             min-height: 200px;
@@ -371,7 +371,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
 
         /* Final Message */
@@ -508,8 +508,12 @@
             }
 
             .btn {
-                padding: 15px 30px;
-                font-size: 1em;
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+
+            .btn-group {
+                gap: 10px;
             }
 
             .journey-map {
